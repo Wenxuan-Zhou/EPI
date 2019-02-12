@@ -32,7 +32,7 @@ class StrikerAvgEnv(StrikerEnv):
         damping = np.copy(self.original_damping)
 
         if scale is None:
-            self.scale = np.random.randint(0, 5, EPI.NUM_OF_PARAMS)*0.1+0.05  # 0~0.4
+            self.scale = np.random.randint(0, 5, EPI.NUM_OF_PARAMS)*0.1  # 0~0.4
         else:
             self.scale = scale
 

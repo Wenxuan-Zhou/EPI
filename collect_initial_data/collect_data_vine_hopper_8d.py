@@ -43,13 +43,10 @@ def main():
             full_state = core_env.state_vector()
             rollouts.append([full_state, action])
             next_observation, reward, terminal, reward_dict = env.step(action)
-            # if args.render:
-            # env.render()
             episode_size += 1
             sample_size += 1
             observation = next_observation
             if terminal or sample_size == target_sample_size:
-                print(episode_size)
                 break
 
     print('Rollout...')
@@ -73,7 +70,7 @@ def main():
     g = lambda s, num: [s + str(i) for i in range(num)]
     columns = g('obs', len(observation))+g('ac', len(action))+g('next_obs', len(observation))+g('env_id', 1)+g('env_vec', 8)+['reward']+['terminal']
     df = pd.DataFrame(data, columns=columns)
-    df.to_csv('data_vine_hopper_8.csv')
+    df.to_csv('../EPI/envs/hopper_data_vine.csv')
 
 
 if __name__ == '__main__':

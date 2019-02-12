@@ -31,7 +31,6 @@ def main():
     # Defaults
     TRPO = BasicTRPO
     batch_size = 100000
-    max_path_length = 1000
     n_itr = 1000
     hidden_sizes = (32, 32)
     gae_lambda = 1
@@ -43,6 +42,7 @@ def main():
         max_path_length = 200
     elif 'Hopper' in args.name:
         EPI.init('hopper', num_of_params=args.params)
+        max_path_length = 1000
     else:
         assert()
 

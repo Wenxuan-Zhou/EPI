@@ -17,40 +17,17 @@ import EPI
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('name')
-    parser.add_argument('-n')
-    parser.add_argument('-e')
-    parser.add_argument('-r')
-    parser.add_argument('-l')
+    parser.add_argument('-e', type=int)
+    parser.add_argument('-r', default=0.5, type=float)
     args = parser.parse_args()
-
-    if args.l is None:
-        loss_type = 'interaction_separation'
-    else:
-        loss_type = args.l
-
-    if args.r is None:
-        reward_scale = 0.5
-    else:
-        reward_scale = float(args.r)
 
     name = args.name
 
     if 'Striker' in name:
-        if args.r is None:
-            reward_scale = 0.1
-        EPI.init('striker', prediction_reward_scale=reward_scale, embedding_dimension=int(args.e), loss_type=loss_type)
+        EPI.init('striker', prediction_reward_scale=args.r, embedding_dimension=args.e)
     elif 'Hopper' in name:
-        if args.n == '2':
-            EPI.init('hopper', prediction_reward_scale=reward_scale, num_of_envs=25, num_of_params=2,
-                     embedding_dimension=int(args.e), loss_type=loss_type)
-        elif args.n == '8':
-            EPI.init('hopper', prediction_reward_scale=reward_scale, num_of_envs=100, num_of_params=8,
-                     embedding_dimension=int(args.e), loss_type=loss_type)
-        else:
-            raise ValueError
-    else:
-        EPI.init((name.replace("Interaction", "")).lower(), prediction_reward_scale=reward_scale,
-                 embedding_dimension=int(args.e), loss_type=loss_type)
+        EPI.init('hopper', prediction_reward_scale=args.r, num_of_envs=100, num_of_params=8,
+                 embedding_dimension=int(args.e))
 
     log_dir = setup_logger(exp_name=name)
     logger.log("EPI:DEFAULT_REWARD_SCALE:" + str(EPI.DEFAULT_REWARD_SCALE))
@@ -79,11 +56,10 @@ def main():
         step_size=0.01,
     )
 
-    predicion_model = PredictionModel(log_dir)
-
+    prediction_model = PredictionModel(log_dir)
     sess = tf.Session()
     sess.__enter__()
-    algo.train(sess=sess, pred_model=predicion_model)
+    algo.train(sess=sess, pred_model=prediction_model)
     pickle.dump(algo, open(log_dir + "/algo.p", "wb"))  # need sess
     sess.close()
     close_logger(log_dir)

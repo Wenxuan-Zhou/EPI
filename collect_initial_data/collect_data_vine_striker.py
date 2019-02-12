@@ -39,18 +39,14 @@ def main():
                 action = env.action_space.sample()
             else:
                 action, d = algo.policy.get_action(observation)
-
             ball_pos = core_env.model.data.qpos[-9:-7]
             if np.linalg.norm(ball_pos-old_ball_pos) > 0.005:
                 full_state = core_env.state_vector()
                 rollouts.append([full_state, action])
-                # env.render()
             next_observation, reward, terminal, reward_dict = env.step(action)
-            # env.render()
             observation = next_observation
             old_ball_pos = ball_pos
             if terminal or len(rollouts) == target_sample_size:
-                print(reward_dict['reward_dist'])
                 break
 
     print('Rollout...')
@@ -76,7 +72,7 @@ def main():
     g = lambda s, num: [s + str(i) for i in range(num)]
     columns = g('obs', 7)+g('next_obs', 7)+g('env_id', 1)+g('env_vec', 2)
     df = pd.DataFrame(data, columns=columns)
-    df.to_csv('data_vine_striker.csv')
+    df.to_csv('../EPI/envs/striker_data_vine.csv')
 
 
 if __name__ == '__main__':

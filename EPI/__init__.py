@@ -134,6 +134,7 @@ register(
     reward_threshold=0,
 )
 
+
 def init(env,
          default_reward_scale=1,
          prediction_reward_scale=0.5,
