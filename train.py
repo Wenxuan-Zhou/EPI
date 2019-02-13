@@ -59,7 +59,7 @@ def main():
     # Task Policy
     if 'Task' in args.name:
         TRPO = TaskTRPO
-        interaction_policy = EPIPolicy(env.spec, mode='policy',
+        interaction_policy = EPIPolicy(env.spec,
                                        policy_file=args.epi_folder + '/policy_itr_' + args.epi_itr + '.p',
                                        encoder_file=args.epi_folder + '/mlp_i_itr_' + args.epi_itr + '.h5',
                                        scaler_file=args.epi_folder + '/i_scaler_itr_' + args.epi_itr + '.pkl',
