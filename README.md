@@ -2,11 +2,11 @@
 
 This repository contains the implementation for [Environment Probing Interaction Policies](https://openreview.net/pdf?id=ryl8-3AcFX).
 
-#### Setup
+### Setup
 Follow [instructions](https://rllab.readthedocs.io/en/latest/user/installation.html) to create a conda 
 environment *rllab3* with OpenAI Gym and Mujoco v1.31.
 
-#### Usage
+### Usage
 
 **Training**
 
@@ -35,5 +35,5 @@ python train.py HopperOracle
 
 **Evaluation**
 ```
- python evaluate_hopper_with_policy.py data/Hopper/HopperTaskReset_0730/Exp180730_HopperTaskReset_6 --epi_folder data/Hopper/HopperInteraction_8/Exp180727_HopperInteraction_0/ --epi_itr 200
+ python evaluate.py data/Hopper/HopperTaskReset_0730/Exp180730_HopperTaskReset_6 --epi_folder data/Hopper/HopperInteraction_8/Exp180727_HopperInteraction_0/ --epi_itr 200
 ```
